@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'btpetmouse.keystore'
+            keyPassword 'szjixiankj12345678'
+            storeFile file('../btpetmouse.keystore')
+            storePassword 'szjixiankj12345678'
+        }
+    }
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+    defaultConfig {
+        applicationId "com.uascent.android.pethunting"
+        minSdkVersion 18
+        targetSdkVersion 23
+        signingConfig signingConfigs.config
+    }
+    buildTypes {
+        release {
+            buildConfigField("boolean", "debug", "false")  //不显示log
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            buildConfigField("boolean", "debug", "true")   //显示log
+        }
+    }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    productFlavors {
+    }
+}
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile(name: 'library-release', ext: 'aar')
+}
